@@ -78,10 +78,10 @@ export function HeroSection() {
                 style={
                   {
                     WebkitMaskImage:
-                      "linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%)",
+                      "linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 9%, #000 98%, transparent 100%)",
                     WebkitMaskComposite: "source-in",
                     maskImage:
-                      "linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%)",
+                      "linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 9%, #000 98%, transparent 100%)",
                     maskComposite: "intersect",
                   } as React.CSSProperties
                 }
@@ -100,8 +100,8 @@ export function HeroSection() {
                   <source src="/turnover.mp4" type="video/mp4" />
                 </video>
               </div>
-              {/* Timeline floats over the video's lower edge */}
-              <div className="relative -mt-10 px-0 sm:-mt-16 sm:px-4">
+              {/* Timeline sits below the video so the cleaning action stays visible */}
+              <div className="relative mt-4 px-0 sm:mt-5 sm:px-4">
                 <TurnoverTimeline />
               </div>
             </div>
