@@ -1,6 +1,11 @@
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 
-const geo = JSON.parse(readFileSync(new URL("./boroughs.geojson", import.meta.url)));
+const nyc = JSON.parse(
+  readFileSync(new URL("./boroughs.geojson", import.meta.url))
+);
+const njFiles = readdirSync(new URL("./nj/", import.meta.url)).filter((f) =>
+  f.endsWith(".json")
+);
 
 const TIER = {
   Manhattan: "fast",
@@ -11,7 +16,7 @@ const TIER = {
   "Staten Island": "coverage",
 };
 
-// Real neighborhood coordinates [lng, lat]
+// Real NYC neighborhood coordinates [lng, lat]
 const NB = {
   Manhattan: [
     ["Harlem", -73.946, 40.811],
@@ -43,16 +48,33 @@ const NB = {
   "Staten Island": [["St. George", -74.077, 40.644]],
 };
 
-const CENTER_LAT = (40.7 * Math.PI) / 180;
+const CENTER_LAT = (40.72 * Math.PI) / 180;
 const px = (lng) => lng * Math.cos(CENTER_LAT);
 const py = (lat) => lat;
+const polysOf = (g) => (g.type === "Polygon" ? [g.coordinates] : g.coordinates);
 
-// Collect bounds
+// Load features
+const nycFeatures = nyc.features.map((f) => ({
+  name: f.properties.name,
+  tier: TIER[f.properties.name] ?? "coverage",
+  geom: f.geometry,
+}));
+const njCities = njFiles.map((file) => {
+  const ft = JSON.parse(
+    readFileSync(new URL("./nj/" + file, import.meta.url))
+  ).features[0];
+  return {
+    name: ft.properties.NAME,
+    geom: ft.geometry,
+    lon: +ft.properties.INTPTLON,
+    lat: +ft.properties.INTPTLAT,
+  };
+});
+
+// Combined bounds (NYC + NJ)
 let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-const polysOf = (g) =>
-  g.type === "Polygon" ? [g.coordinates] : g.coordinates; // array of polygons
-for (const f of geo.features) {
-  for (const poly of polysOf(f.geometry))
+for (const f of [...nycFeatures, ...njCities])
+  for (const poly of polysOf(f.geom))
     for (const ring of poly)
       for (const [lng, lat] of ring) {
         const X = px(lng), Y = py(lat);
@@ -61,9 +83,8 @@ for (const f of geo.features) {
         if (Y < minY) minY = Y;
         if (Y > maxY) maxY = Y;
       }
-}
 
-const W = 600;
+const W = 660;
 const PAD = 6;
 const scale = (W - 2 * PAD) / (maxX - minX);
 const H = Math.round((maxY - minY) * scale + 2 * PAD);
@@ -71,14 +92,11 @@ const sx = (lng) => +(PAD + (px(lng) - minX) * scale).toFixed(1);
 const sy = (lat) => +(PAD + (maxY - py(lat)) * scale).toFixed(1);
 
 function ringPath(ring) {
-  let d = "";
-  let prevX = null, prevY = null;
-  let kept = 0;
-  for (let i = 0; i < ring.length; i++) {
-    const X = sx(ring[i][0]);
-    const Y = sy(ring[i][1]);
-    if (prevX !== null && Math.abs(X - prevX) < 0.7 && Math.abs(Y - prevY) < 0.7)
-      continue; // decimate near-duplicate points
+  let d = "", prevX = null, prevY = null, kept = 0;
+  for (const [lng, lat] of ring) {
+    const X = sx(lng), Y = sy(lat);
+    if (prevX !== null && Math.abs(X - prevX) < 0.6 && Math.abs(Y - prevY) < 0.6)
+      continue;
     d += (kept === 0 ? "M" : "L") + X + " " + Y;
     prevX = X;
     prevY = Y;
@@ -87,50 +105,64 @@ function ringPath(ring) {
   return kept > 2 ? d + "Z" : "";
 }
 
-function boroughPath(g) {
+function landPath(geom, minDiag) {
   let d = "";
-  for (const poly of polysOf(g)) {
+  for (const poly of polysOf(geom))
     for (const ring of poly) {
-      // skip tiny rings (small islands) to reduce clutter
-      let rx0 = Infinity, rx1 = -Infinity, ry0 = Infinity, ry1 = -Infinity;
+      let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
       for (const [lng, lat] of ring) {
         const X = sx(lng), Y = sy(lat);
-        if (X < rx0) rx0 = X;
-        if (X > rx1) rx1 = X;
-        if (Y < ry0) ry0 = Y;
-        if (Y > ry1) ry1 = Y;
+        if (X < x0) x0 = X;
+        if (X > x1) x1 = X;
+        if (Y < y0) y0 = Y;
+        if (Y > y1) y1 = Y;
       }
-      if (Math.hypot(rx1 - rx0, ry1 - ry0) < 6) continue;
+      if (Math.hypot(x1 - x0, y1 - y0) < minDiag) continue;
       d += ringPath(ring);
     }
-  }
   return d;
 }
 
-const boroughs = [];
-for (const f of geo.features) {
-  const name = f.properties.name;
-  const d = boroughPath(f.geometry);
-  // bbox center for label
-  let bx0 = Infinity, bx1 = -Infinity, by0 = Infinity, by1 = -Infinity;
-  for (const poly of polysOf(f.geometry))
-    for (const ring of poly)
-      for (const [lng, lat] of ring) {
-        const X = sx(lng), Y = sy(lat);
-        if (X < bx0) bx0 = X;
-        if (X > bx1) bx1 = X;
-        if (Y < by0) by0 = Y;
-        if (Y > by1) by1 = Y;
-      }
-  boroughs.push({
-    name,
-    tier: TIER[name] ?? "coverage",
-    d,
-    labelX: +(((bx0 + bx1) / 2)).toFixed(1),
-    labelY: +(((by0 + by1) / 2)).toFixed(1),
-  });
+function bboxCenter(geoms) {
+  let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+  for (const g of geoms)
+    for (const poly of polysOf(g))
+      for (const ring of poly)
+        for (const [lng, lat] of ring) {
+          const X = sx(lng), Y = sy(lat);
+          if (X < x0) x0 = X;
+          if (X > x1) x1 = X;
+          if (Y < y0) y0 = Y;
+          if (Y > y1) y1 = Y;
+        }
+  return [+(((x0 + x1) / 2)).toFixed(1), +(((y0 + y1) / 2)).toFixed(1)];
 }
 
+// Regions: 5 NYC boroughs + one combined New Jersey
+const boroughs = [];
+for (const f of nycFeatures) {
+  const [labelX, labelY] = bboxCenter([f.geom]);
+  boroughs.push({
+    name: f.name,
+    tier: f.tier,
+    d: landPath(f.geom, 6),
+    labelX,
+    labelY,
+  });
+}
+// New Jersey: merge all city polygons into one land
+let njD = "";
+for (const c of njCities) njD += landPath(c.geom, 1.5);
+const [njLabelX, njLabelY] = bboxCenter(njCities.map((c) => c.geom));
+boroughs.push({
+  name: "New Jersey",
+  tier: "coverage",
+  d: njD,
+  labelX: njLabelX,
+  labelY: njLabelY - 26, // nudge label above the strip
+});
+
+// Pins: NYC neighborhoods + NJ cities (at interior points)
 const pins = [];
 for (const [borough, list] of Object.entries(NB))
   for (const [name, lng, lat] of list)
@@ -141,8 +173,17 @@ for (const [borough, list] of Object.entries(NB))
       x: sx(lng),
       y: sy(lat),
     });
+for (const c of njCities)
+  pins.push({
+    name: c.name,
+    borough: "New Jersey",
+    tier: "coverage",
+    x: sx(c.lon),
+    y: sy(c.lat),
+  });
 
-const out = `// AUTO-GENERATED from NYC borough boundaries (NYC Open Data via click_that_hood).
+const out = `// AUTO-GENERATED from NYC borough boundaries (NYC Open Data) and nearby
+// New Jersey municipal boundaries (US Census via geojson-us-city-boundaries).
 // Real geography projected to an SVG viewBox. Regenerate with scripts/gen-map.mjs.
 export const MAP_WIDTH = ${W};
 export const MAP_HEIGHT = ${H};
@@ -171,5 +212,5 @@ writeFileSync(
   out
 );
 console.log(
-  `viewBox ${W}x${H} | boroughs ${boroughs.length} | pins ${pins.length} | data ${(out.length / 1024).toFixed(1)}kb`
+  `viewBox ${W}x${H} | regions ${boroughs.length} | pins ${pins.length} | ${(out.length / 1024).toFixed(1)}kb`
 );
