@@ -64,7 +64,7 @@ for (const f of geo.features) {
 }
 
 const W = 600;
-const PAD = 18;
+const PAD = 6;
 const scale = (W - 2 * PAD) / (maxX - minX);
 const H = Math.round((maxY - minY) * scale + 2 * PAD);
 const sx = (lng) => +(PAD + (px(lng) - minX) * scale).toFixed(1);

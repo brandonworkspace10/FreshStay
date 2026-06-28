@@ -18,7 +18,9 @@ const allNeighborhoods = MAP_PINS.map((p) => p.name);
 
 export function NeighborhoodsSection() {
   const [active, setActive] = useState<string | null>(null);
+  const [hoverBorough, setHoverBorough] = useState<string | null>(null);
   const activePin = MAP_PINS.find((p) => p.name === active);
+  const activeBorough = hoverBorough ?? activePin?.borough ?? null;
   const tipAbove = activePin ? activePin.y > 44 : true;
 
   return (
@@ -89,18 +91,30 @@ export function NeighborhoodsSection() {
               ))}
             </g>
 
-            {/* Borough land */}
-            {MAP_BOROUGHS.map((b) => (
-              <path
-                key={b.name}
-                d={b.d}
-                fill={color(b.tier)}
-                fillOpacity={b.tier === "fast" ? 0.2 : 0.16}
-                stroke="#ffffff"
-                strokeWidth="1.4"
-                strokeLinejoin="round"
-              />
-            ))}
+            {/* Borough land — tints on hover */}
+            {MAP_BOROUGHS.map((b) => {
+              const isActive = activeBorough === b.name;
+              const baseOpacity = b.tier === "fast" ? 0.2 : 0.16;
+              return (
+                <motion.path
+                  key={b.name}
+                  d={b.d}
+                  fill={color(b.tier)}
+                  stroke={isActive ? color(b.tier) : "#ffffff"}
+                  strokeLinejoin="round"
+                  className="cursor-pointer"
+                  animate={{
+                    fillOpacity: isActive ? 0.5 : baseOpacity,
+                    strokeWidth: isActive ? 2.4 : 1.4,
+                  }}
+                  transition={{ duration: 0.2 }}
+                  onMouseEnter={() => setHoverBorough(b.name)}
+                  onMouseLeave={() =>
+                    setHoverBorough((cur) => (cur === b.name ? null : cur))
+                  }
+                />
+              );
+            })}
 
             {/* Borough labels */}
             {MAP_BOROUGHS.map((b) => (
