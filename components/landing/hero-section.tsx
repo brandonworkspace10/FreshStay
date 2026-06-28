@@ -16,7 +16,7 @@ export function HeroSection() {
         }}
       />
       <div className="relative mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+        <div className="grid items-start gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="max-w-xl">
             <p className="mb-4 inline-flex rounded-full bg-fresh-light px-3 py-1 text-xs font-semibold tracking-wide text-fresh uppercase">
               Airbnb cleaning · NYC
@@ -70,7 +70,7 @@ export function HeroSection() {
               </li>
             </ul>
           </div>
-          <div className="lg:pl-4">
+          <div className="lg:-mt-2 lg:pl-4">
             <div className="relative">
               {/* Video with feathered edges so it blends into the page */}
               <div
@@ -101,7 +101,7 @@ export function HeroSection() {
                 </video>
               </div>
               {/* Timeline floats over the video's lower edge */}
-              <div className="relative -mt-14 px-1 sm:-mt-16 sm:px-4">
+              <div className="relative -mt-10 px-0 sm:-mt-16 sm:px-4">
                 <TurnoverTimeline />
               </div>
             </div>
