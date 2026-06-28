@@ -3,96 +3,23 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
-type Pin = { name: string; x: number; y: number };
-type Borough = {
-  name: string;
-  tier: "fast" | "coverage";
-  labelX: number;
-  labelY: number;
-  pins: Pin[];
-};
-
-// Stylized (not geographically exact) layout of NYC service areas.
-const boroughs: Borough[] = [
-  {
-    name: "The Bronx",
-    tier: "coverage",
-    labelX: 372,
-    labelY: 52,
-    pins: [{ name: "South Bronx", x: 366, y: 84 }],
-  },
-  {
-    name: "Manhattan",
-    tier: "fast",
-    labelX: 196,
-    labelY: 150,
-    pins: [
-      { name: "Harlem", x: 262, y: 92 },
-      { name: "Upper West Side", x: 244, y: 126 },
-      { name: "Upper East Side", x: 282, y: 124 },
-      { name: "Midtown", x: 258, y: 156 },
-      { name: "Chelsea", x: 246, y: 182 },
-      { name: "SoHo", x: 256, y: 206 },
-      { name: "Financial District", x: 258, y: 232 },
-    ],
-  },
-  {
-    name: "Queens",
-    tier: "fast",
-    labelX: 470,
-    labelY: 150,
-    pins: [
-      { name: "Astoria", x: 356, y: 168 },
-      { name: "Long Island City", x: 332, y: 196 },
-      { name: "Jackson Heights", x: 414, y: 194 },
-      { name: "Flushing", x: 472, y: 186 },
-      { name: "Forest Hills", x: 442, y: 240 },
-      { name: "Ridgewood", x: 382, y: 250 },
-    ],
-  },
-  {
-    name: "Brooklyn",
-    tier: "fast",
-    labelX: 300,
-    labelY: 356,
-    pins: [
-      { name: "Greenpoint", x: 322, y: 244 },
-      { name: "Williamsburg", x: 312, y: 264 },
-      { name: "DUMBO", x: 290, y: 270 },
-      { name: "Bushwick", x: 352, y: 270 },
-      { name: "Bed-Stuy", x: 332, y: 292 },
-      { name: "Park Slope", x: 306, y: 310 },
-      { name: "Crown Heights", x: 346, y: 318 },
-    ],
-  },
-  {
-    name: "Staten Island",
-    tier: "coverage",
-    labelX: 138,
-    labelY: 348,
-    pins: [{ name: "St. George", x: 150, y: 378 }],
-  },
-];
+import {
+  MAP_BOROUGHS,
+  MAP_HEIGHT,
+  MAP_PINS,
+  MAP_WIDTH,
+} from "@/components/landing/nyc-map-data";
 
 const FAST = "#FF5A5F";
 const COVERAGE = "#13a08c";
+const color = (tier: "fast" | "coverage") => (tier === "fast" ? FAST : COVERAGE);
 
-const heatBlobs = [
-  { x: 256, y: 165, r: 95, tier: "fast" as const },
-  { x: 330, y: 285, r: 95, tier: "fast" as const },
-  { x: 405, y: 210, r: 105, tier: "fast" as const },
-  { x: 366, y: 86, r: 64, tier: "coverage" as const },
-  { x: 150, y: 376, r: 58, tier: "coverage" as const },
-];
-
-const allNeighborhoods = boroughs.flatMap((b) => b.pins.map((p) => p.name));
+const allNeighborhoods = MAP_PINS.map((p) => p.name);
 
 export function NeighborhoodsSection() {
   const [active, setActive] = useState<string | null>(null);
-
-  const activePin = boroughs
-    .flatMap((b) => b.pins.map((p) => ({ ...p, tier: b.tier })))
-    .find((p) => p.name === active);
+  const activePin = MAP_PINS.find((p) => p.name === active);
+  const tipAbove = activePin ? activePin.y > 44 : true;
 
   return (
     <section
@@ -136,159 +63,124 @@ export function NeighborhoodsSection() {
 
         <div className="surface-card overflow-hidden p-3 sm:p-4">
           <svg
-            viewBox="0 0 560 440"
+            viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`}
             className="h-auto w-full touch-none select-none"
             role="img"
-            aria-label="Interactive heat map of FreshStay cleaning coverage across New York City neighborhoods"
+            aria-label="Map of FreshStay cleaning coverage across the five boroughs of New York City"
           >
             <defs>
-              <radialGradient id="heat-fast">
-                <stop offset="0%" stopColor={FAST} stopOpacity="0.55" />
-                <stop offset="55%" stopColor={FAST} stopOpacity="0.18" />
-                <stop offset="100%" stopColor={FAST} stopOpacity="0" />
-              </radialGradient>
-              <radialGradient id="heat-coverage">
-                <stop offset="0%" stopColor={COVERAGE} stopOpacity="0.4" />
-                <stop offset="60%" stopColor={COVERAGE} stopOpacity="0.14" />
-                <stop offset="100%" stopColor={COVERAGE} stopOpacity="0" />
-              </radialGradient>
-              <filter id="heat-blur" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="9" />
+              <filter id="heat-blur" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="7" />
               </filter>
-              <pattern
-                id="grid"
-                width="28"
-                height="28"
-                patternUnits="userSpaceOnUse"
-              >
-                <path
-                  d="M28 0H0V28"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                  className="text-border/50"
-                />
-              </pattern>
             </defs>
 
-            {/* Map base */}
-            <rect width="560" height="440" rx="14" className="fill-fresh-light/40" />
-            <rect width="560" height="440" rx="14" fill="url(#grid)" />
+            {/* Water */}
+            <rect
+              width={MAP_WIDTH}
+              height={MAP_HEIGHT}
+              rx="14"
+              className="fill-fresh-light/40"
+            />
 
-            {/* Heat zones with a gentle idle pulse */}
+            {/* Heat glow under the fastest-response boroughs */}
             <g filter="url(#heat-blur)">
-              {heatBlobs.map((b, i) => (
-                <motion.circle
-                  key={i}
-                  cx={b.x}
-                  cy={b.y}
-                  r={b.r}
-                  fill={
-                    b.tier === "fast" ? "url(#heat-fast)" : "url(#heat-coverage)"
-                  }
-                  style={{ transformBox: "fill-box", transformOrigin: "center" }}
-                  animate={{ scale: [1, 1.05, 1], opacity: [0.9, 1, 0.9] }}
-                  transition={{
-                    duration: 4 + i * 0.4,
-                    repeat: Number.POSITIVE_INFINITY,
-                    ease: "easeInOut",
-                  }}
-                />
+              {MAP_BOROUGHS.filter((b) => b.tier === "fast").map((b) => (
+                <path key={`glow-${b.name}`} d={b.d} fill={FAST} opacity="0.22" />
               ))}
             </g>
 
-            {/* Borough labels */}
-            {boroughs.map((b) => (
-              <text
+            {/* Borough land */}
+            {MAP_BOROUGHS.map((b) => (
+              <path
                 key={b.name}
+                d={b.d}
+                fill={color(b.tier)}
+                fillOpacity={b.tier === "fast" ? 0.2 : 0.16}
+                stroke="#ffffff"
+                strokeWidth="1.4"
+                strokeLinejoin="round"
+              />
+            ))}
+
+            {/* Borough labels */}
+            {MAP_BOROUGHS.map((b) => (
+              <text
+                key={`label-${b.name}`}
                 x={b.labelX}
                 y={b.labelY}
                 textAnchor="middle"
-                className="fill-foreground/70 font-display text-[13px] font-bold uppercase tracking-wide"
+                className="fill-foreground/75 font-display text-[13px] font-bold uppercase tracking-wide"
+                style={{ paintOrder: "stroke", stroke: "#ffffff", strokeWidth: 3 }}
               >
                 {b.name}
               </text>
             ))}
 
             {/* Neighborhood pins */}
-            {boroughs.flatMap((b) =>
-              b.pins.map((p) => {
-                const color = b.tier === "fast" ? FAST : COVERAGE;
-                const isActive = active === p.name;
-                return (
-                  <g
-                    key={`${b.name}-${p.name}`}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`${p.name}, ${b.name}`}
-                    className="cursor-pointer outline-none"
-                    onMouseEnter={() => setActive(p.name)}
-                    onMouseLeave={() => setActive(null)}
-                    onFocus={() => setActive(p.name)}
-                    onBlur={() => setActive(null)}
-                  >
-                    {/* Pulsing ring on hover */}
-                    {isActive ? (
-                      <motion.circle
-                        cx={p.x}
-                        cy={p.y}
-                        r="9"
-                        fill="none"
-                        stroke={color}
-                        strokeWidth="2"
-                        style={{
-                          transformBox: "fill-box",
-                          transformOrigin: "center",
-                        }}
-                        initial={{ scale: 0.6, opacity: 0.6 }}
-                        animate={{ scale: 2.1, opacity: 0 }}
-                        transition={{
-                          duration: 1.1,
-                          repeat: Number.POSITIVE_INFINITY,
-                          ease: "easeOut",
-                        }}
-                      />
-                    ) : null}
-                    {/* Soft halo */}
-                    <circle cx={p.x} cy={p.y} r="9" fill={color} opacity="0.18" />
-                    {/* Pin core — pops bigger on hover */}
+            {MAP_PINS.map((p) => {
+              const c = color(p.tier);
+              const isActive = active === p.name;
+              return (
+                <g
+                  key={p.name}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${p.name}, ${p.borough}`}
+                  className="cursor-pointer outline-none"
+                  onMouseEnter={() => setActive(p.name)}
+                  onMouseLeave={() => setActive(null)}
+                  onFocus={() => setActive(p.name)}
+                  onBlur={() => setActive(null)}
+                >
+                  {isActive ? (
                     <motion.circle
                       cx={p.x}
                       cy={p.y}
-                      r="4"
-                      fill={color}
-                      stroke="#ffffff"
-                      strokeWidth="1.5"
-                      style={{
-                        transformBox: "fill-box",
-                        transformOrigin: "center",
+                      r="7"
+                      fill="none"
+                      stroke={c}
+                      strokeWidth="2"
+                      style={{ transformBox: "fill-box", transformOrigin: "center" }}
+                      initial={{ scale: 0.6, opacity: 0.6 }}
+                      animate={{ scale: 2.3, opacity: 0 }}
+                      transition={{
+                        duration: 1.1,
+                        repeat: Number.POSITIVE_INFINITY,
+                        ease: "easeOut",
                       }}
-                      animate={{ scale: isActive ? 1.9 : 1 }}
-                      transition={{ type: "spring", stiffness: 420, damping: 16 }}
                     />
-                  </g>
-                );
-              })
-            )}
+                  ) : null}
+                  <circle cx={p.x} cy={p.y} r="7" fill={c} opacity="0.18" />
+                  <motion.circle
+                    cx={p.x}
+                    cy={p.y}
+                    r="3.6"
+                    fill={c}
+                    stroke="#ffffff"
+                    strokeWidth="1.5"
+                    style={{ transformBox: "fill-box", transformOrigin: "center" }}
+                    animate={{ scale: isActive ? 1.9 : 1 }}
+                    transition={{ type: "spring", stiffness: 420, damping: 16 }}
+                  />
+                </g>
+              );
+            })}
 
             {/* Hover tooltip */}
             <AnimatePresence>
               {activePin ? (
                 <motion.g
                   key={activePin.name}
-                  initial={{ opacity: 0, y: 6, scale: 0.85 }}
+                  initial={{ opacity: 0, y: tipAbove ? 6 : -6, scale: 0.85 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 4, scale: 0.9 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ type: "spring", stiffness: 500, damping: 28 }}
-                  style={{
-                    transformBox: "fill-box",
-                    transformOrigin: "center",
-                  }}
+                  style={{ transformBox: "fill-box", transformOrigin: "center" }}
                   pointerEvents="none"
                 >
                   <rect
                     x={activePin.x - (activePin.name.length * 7 + 20) / 2}
-                    y={activePin.y - 40}
+                    y={tipAbove ? activePin.y - 38 : activePin.y + 14}
                     width={activePin.name.length * 7 + 20}
                     height="26"
                     rx="7"
@@ -296,7 +188,7 @@ export function NeighborhoodsSection() {
                   />
                   <text
                     x={activePin.x}
-                    y={activePin.y - 22}
+                    y={tipAbove ? activePin.y - 20 : activePin.y + 32}
                     textAnchor="middle"
                     className="fill-background text-[13px] font-semibold"
                   >
