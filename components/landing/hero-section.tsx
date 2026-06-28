@@ -1,6 +1,7 @@
 import { ArrowRight, ShieldCheck, Star, Users } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { HeroVideo } from "@/components/landing/hero-video";
 import { TurnoverTimeline } from "@/components/landing/turnover-timeline";
 
 export function HeroSection() {
@@ -72,34 +73,7 @@ export function HeroSection() {
           </div>
           <div className="lg:-mt-2 lg:pl-4">
             <div className="relative">
-              {/* Video with feathered edges so it blends into the page */}
-              <div
-                className="overflow-hidden rounded-2xl"
-                style={
-                  {
-                    WebkitMaskImage:
-                      "linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 9%, #000 98%, transparent 100%)",
-                    WebkitMaskComposite: "source-in",
-                    maskImage:
-                      "linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 9%, #000 98%, transparent 100%)",
-                    maskComposite: "intersect",
-                  } as React.CSSProperties
-                }
-              >
-                {/* biome-ignore lint/a11y/useMediaCaption: decorative, muted background loop */}
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  poster="/turnover-poster.jpg"
-                  className="w-full object-cover"
-                  style={{ aspectRatio: "1280 / 674" }}
-                >
-                  <source src="/turnover.mp4" type="video/mp4" />
-                </video>
-              </div>
+              <HeroVideo />
               {/* Timeline sits below the video so the cleaning action stays visible */}
               <div className="relative mt-4 px-0 sm:mt-5 sm:px-4">
                 <TurnoverTimeline />
