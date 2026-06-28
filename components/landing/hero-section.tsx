@@ -71,7 +71,40 @@ export function HeroSection() {
             </ul>
           </div>
           <div className="lg:pl-4">
-            <TurnoverTimeline />
+            <div className="relative">
+              {/* Video with feathered edges so it blends into the page */}
+              <div
+                className="overflow-hidden rounded-2xl"
+                style={
+                  {
+                    WebkitMaskImage:
+                      "linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%)",
+                    WebkitMaskComposite: "source-in",
+                    maskImage:
+                      "linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%)",
+                    maskComposite: "intersect",
+                  } as React.CSSProperties
+                }
+              >
+                {/* biome-ignore lint/a11y/useMediaCaption: decorative, muted background loop */}
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  poster="/turnover-poster.jpg"
+                  className="w-full object-cover"
+                  style={{ aspectRatio: "1280 / 674" }}
+                >
+                  <source src="/turnover.mp4" type="video/mp4" />
+                </video>
+              </div>
+              {/* Timeline floats over the video's lower edge */}
+              <div className="relative -mt-14 px-1 sm:-mt-16 sm:px-4">
+                <TurnoverTimeline />
+              </div>
+            </div>
             <p className="mt-4 text-center text-sm text-muted-foreground lg:text-left">
               Most hosts book us on a plan so turnover day is never a scramble.
             </p>
