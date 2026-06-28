@@ -39,7 +39,7 @@ export function JsonLd() {
         containedInPlace: { "@type": "State", name: "New York" },
       },
       priceRange: "$89–$179",
-      image: `${siteConfig.url}/opengraph-image.png`,
+      image: `${siteConfig.url}/opengraph-image`,
     },
     {
       "@type": "Service",
@@ -50,6 +50,36 @@ export function JsonLd() {
       serviceType: "Short-term rental cleaning",
       description:
         "Recurring turnover cleaning for NYC Airbnb hosts — weekly, bi-weekly, or per-stay plans with same-day availability.",
+      offers: {
+        "@type": "AggregateOffer",
+        priceCurrency: "USD",
+        lowPrice: "89",
+        highPrice: "179",
+        offerCount: "3",
+        offers: [
+          {
+            "@type": "Offer",
+            name: "Per-stay turnover",
+            price: "129",
+            priceCurrency: "USD",
+            description: "One-time turnover clean for a standard 1-bedroom.",
+          },
+          {
+            "@type": "Offer",
+            name: "Bi-weekly plan",
+            price: "99",
+            priceCurrency: "USD",
+            description: "Recurring bi-weekly turnover clean, per visit.",
+          },
+          {
+            "@type": "Offer",
+            name: "Weekly plan",
+            price: "89",
+            priceCurrency: "USD",
+            description: "Recurring weekly turnover clean, per visit.",
+          },
+        ],
+      },
     },
     {
       "@type": "WebSite",

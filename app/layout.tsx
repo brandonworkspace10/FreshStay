@@ -11,9 +11,10 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-const title = "FreshStay | Airbnb Cleaning NYC — Recurring Turnover Plans";
+const title =
+  "FreshStay BnB | Airbnb & Short-Term Rental Cleaning NYC — Recurring Turnover Plans";
 const description =
-  "NYC Airbnb turnover cleaning on a recurring plan. Same-day service, insured crews, background-checked cleaners. Weekly, bi-weekly, or per-stay for Manhattan, Brooklyn & Queens hosts.";
+  "FreshStay BnB handles NYC Airbnb turnover cleaning on a recurring plan. Same-day service, insured crews, background-checked cleaners. Weekly, bi-weekly, or per-stay for Manhattan, Brooklyn & Queens hosts.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -25,10 +26,16 @@ export const metadata: Metadata = {
   keywords: [
     "airbnb cleaning nyc",
     "airbnb turnover cleaning",
+    "bnb cleaning service nyc",
     "short term rental cleaning new york",
     "vacation rental cleaning manhattan",
     "airbnb cleaner brooklyn",
+    "freshstay bnb",
   ],
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
   alternates: {
     canonical: "/",
   },

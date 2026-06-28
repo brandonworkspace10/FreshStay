@@ -1,17 +1,15 @@
 import Link from "next/link";
 import { Phone } from "lucide-react";
 
+import { BrandMark } from "@/components/landing/brand-mark";
 import { Button } from "@/components/ui/button";
 
 export function LandingHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-lg">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:h-16 sm:px-6">
-        <Link
-          href="/"
-          className="font-display text-xl font-bold tracking-tight text-foreground"
-        >
-          Fresh<span className="text-fresh">Stay</span>
+        <Link href="/" aria-label="FreshStay BnB home">
+          <BrandMark />
         </Link>
         <nav
           className="hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex"

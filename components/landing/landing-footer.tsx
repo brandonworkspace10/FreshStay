@@ -1,17 +1,17 @@
 import { Phone } from "lucide-react";
 
+import { BrandMark } from "@/components/landing/brand-mark";
+
 export function LandingFooter() {
   return (
     <footer className="border-t border-border bg-background">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div>
-            <p className="font-display text-xl font-bold tracking-tight text-foreground">
-              Fresh<span className="text-fresh">Stay</span>
-            </p>
+            <BrandMark />
             <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-              Professional Airbnb turnover cleaning for NYC hosts. Recurring
-              plans so checkout day runs itself.
+              Professional Airbnb &amp; short-term rental turnover cleaning for
+              NYC hosts. Recurring plans so checkout day runs itself.
             </p>
           </div>
           <div className="grid gap-8 sm:grid-cols-2">
