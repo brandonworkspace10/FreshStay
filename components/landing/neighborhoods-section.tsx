@@ -1,3 +1,8 @@
+"use client";
+
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
+
 type Pin = { name: string; x: number; y: number };
 type Borough = {
   name: string;
@@ -83,6 +88,12 @@ const heatBlobs = [
 const allNeighborhoods = boroughs.flatMap((b) => b.pins.map((p) => p.name));
 
 export function NeighborhoodsSection() {
+  const [active, setActive] = useState<string | null>(null);
+
+  const activePin = boroughs
+    .flatMap((b) => b.pins.map((p) => ({ ...p, tier: b.tier })))
+    .find((p) => p.name === active);
+
   return (
     <section
       id="neighborhoods"
@@ -118,17 +129,17 @@ export function NeighborhoodsSection() {
             </span>
           </div>
           <p className="mt-6 text-sm text-muted-foreground">
-            Not sure if we cover your block? Text us your address before you
-            sign up—we&apos;ll confirm in minutes.
+            Hover a pin to see the area—or text us your address before you sign
+            up and we&apos;ll confirm coverage in minutes.
           </p>
         </div>
 
         <div className="surface-card overflow-hidden p-3 sm:p-4">
           <svg
             viewBox="0 0 560 440"
-            className="h-auto w-full"
+            className="h-auto w-full touch-none select-none"
             role="img"
-            aria-label="Heat map of FreshStay cleaning coverage across New York City neighborhoods"
+            aria-label="Interactive heat map of FreshStay cleaning coverage across New York City neighborhoods"
           >
             <defs>
               <radialGradient id="heat-fast">
@@ -164,10 +175,10 @@ export function NeighborhoodsSection() {
             <rect width="560" height="440" rx="14" className="fill-fresh-light/40" />
             <rect width="560" height="440" rx="14" fill="url(#grid)" />
 
-            {/* Heat zones */}
+            {/* Heat zones with a gentle idle pulse */}
             <g filter="url(#heat-blur)">
               {heatBlobs.map((b, i) => (
-                <circle
+                <motion.circle
                   key={i}
                   cx={b.x}
                   cy={b.y}
@@ -175,6 +186,13 @@ export function NeighborhoodsSection() {
                   fill={
                     b.tier === "fast" ? "url(#heat-fast)" : "url(#heat-coverage)"
                   }
+                  style={{ transformBox: "fill-box", transformOrigin: "center" }}
+                  animate={{ scale: [1, 1.05, 1], opacity: [0.9, 1, 0.9] }}
+                  transition={{
+                    duration: 4 + i * 0.4,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "easeInOut",
+                  }}
                 />
               ))}
             </g>
@@ -196,21 +214,97 @@ export function NeighborhoodsSection() {
             {boroughs.flatMap((b) =>
               b.pins.map((p) => {
                 const color = b.tier === "fast" ? FAST : COVERAGE;
+                const isActive = active === p.name;
                 return (
-                  <g key={`${b.name}-${p.name}`}>
+                  <g
+                    key={`${b.name}-${p.name}`}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`${p.name}, ${b.name}`}
+                    className="cursor-pointer outline-none"
+                    onMouseEnter={() => setActive(p.name)}
+                    onMouseLeave={() => setActive(null)}
+                    onFocus={() => setActive(p.name)}
+                    onBlur={() => setActive(null)}
+                  >
+                    {/* Pulsing ring on hover */}
+                    {isActive ? (
+                      <motion.circle
+                        cx={p.x}
+                        cy={p.y}
+                        r="9"
+                        fill="none"
+                        stroke={color}
+                        strokeWidth="2"
+                        style={{
+                          transformBox: "fill-box",
+                          transformOrigin: "center",
+                        }}
+                        initial={{ scale: 0.6, opacity: 0.6 }}
+                        animate={{ scale: 2.1, opacity: 0 }}
+                        transition={{
+                          duration: 1.1,
+                          repeat: Number.POSITIVE_INFINITY,
+                          ease: "easeOut",
+                        }}
+                      />
+                    ) : null}
+                    {/* Soft halo */}
                     <circle cx={p.x} cy={p.y} r="9" fill={color} opacity="0.18" />
-                    <circle
+                    {/* Pin core — pops bigger on hover */}
+                    <motion.circle
                       cx={p.x}
                       cy={p.y}
                       r="4"
                       fill={color}
                       stroke="#ffffff"
                       strokeWidth="1.5"
+                      style={{
+                        transformBox: "fill-box",
+                        transformOrigin: "center",
+                      }}
+                      animate={{ scale: isActive ? 1.9 : 1 }}
+                      transition={{ type: "spring", stiffness: 420, damping: 16 }}
                     />
                   </g>
                 );
               })
             )}
+
+            {/* Hover tooltip */}
+            <AnimatePresence>
+              {activePin ? (
+                <motion.g
+                  key={activePin.name}
+                  initial={{ opacity: 0, y: 6, scale: 0.85 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 4, scale: 0.9 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 28 }}
+                  style={{
+                    transformBox: "fill-box",
+                    transformOrigin: "center",
+                  }}
+                  pointerEvents="none"
+                >
+                  <rect
+                    x={activePin.x - (activePin.name.length * 7 + 20) / 2}
+                    y={activePin.y - 40}
+                    width={activePin.name.length * 7 + 20}
+                    height="26"
+                    rx="7"
+                    className="fill-foreground"
+                  />
+                  <text
+                    x={activePin.x}
+                    y={activePin.y - 22}
+                    textAnchor="middle"
+                    className="fill-background text-[13px] font-semibold"
+                  >
+                    {activePin.name}
+                  </text>
+                </motion.g>
+              ) : null}
+            </AnimatePresence>
           </svg>
 
           {/* Crawlable list of every covered neighborhood (local SEO) */}
