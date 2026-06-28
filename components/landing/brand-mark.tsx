@@ -4,12 +4,18 @@ type BrandMarkProps = {
   className?: string;
 };
 
-/** Official Airbnb "Bélo" logo. Uses currentColor so it matches the
- *  color of the surrounding "BnB" text. */
-function AirbnbLogo({ className }: { className?: string }) {
+/** Official Airbnb "Bélo" logo, rendered in Airbnb red (#FF5A5F). */
+function AirbnbLogo({
+  className,
+  style,
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="currentColor"
       role="img"
@@ -20,22 +26,19 @@ function AirbnbLogo({ className }: { className?: string }) {
   );
 }
 
-/** FreshStay BnB wordmark with the Airbnb logo beside the "BnB". */
+/** FreshStay wordmark with the official Airbnb logo (#FF5A5F) beside it. */
 export function BrandMark({ className }: BrandMarkProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center font-display text-xl font-bold tracking-tight",
+        "inline-flex items-center gap-1.5 font-display text-xl font-bold tracking-tight",
         className
       )}
     >
       <span className="text-foreground">
         Fresh<span className="text-fresh">Stay</span>
       </span>
-      <span className="ml-1.5 inline-flex items-center gap-1 font-semibold text-muted-foreground">
-        BnB
-        <AirbnbLogo className="size-[18px]" />
-      </span>
+      <AirbnbLogo className="size-5" style={{ color: "#FF5A5F" }} />
     </span>
   );
 }
