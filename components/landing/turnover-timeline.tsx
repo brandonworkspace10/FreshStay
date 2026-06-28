@@ -1,48 +1,67 @@
-import { Check } from "lucide-react";
+import { Clock, KeyRound, LogOut, Sparkles } from "lucide-react";
 
 export function TurnoverTimeline({ className }: { className?: string }) {
   return (
     <div
-      className={`surface-card p-5 ${className ?? ""}`}
-      aria-label="Turnover timeline: guest checkout, cleaning, ready for next guest"
+      className={`surface-card p-5 sm:p-6 ${className ?? ""}`}
+      aria-label="Turnover timeline: 11am guest checkout, same-day FreshStay cleaning, 3pm next guest check-in"
     >
-      <div className="mb-4 flex items-center justify-between text-xs font-medium tracking-wide text-muted-foreground uppercase">
-        <span>11:00 checkout</span>
-        <span className="rounded-full bg-fresh-light px-2 py-0.5 text-fresh normal-case">
+      {/* Times + same-day badge */}
+      <div className="grid grid-cols-3 items-center text-center">
+        <span className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          11:00 AM
+        </span>
+        <span className="justify-self-center rounded-full bg-fresh-light px-2.5 py-1 text-xs font-semibold text-fresh">
           Same-day ready
         </span>
-        <span>3:00 check-in</span>
+        <span className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          3:00 PM
+        </span>
       </div>
-      <div className="relative flex items-center gap-0">
-        <div className="flex flex-1 flex-col items-center gap-2">
-          <div className="flex size-10 items-center justify-center rounded-full bg-muted text-muted-foreground">
-            <span className="text-xs font-semibold">OUT</span>
-          </div>
-          <span className="text-center text-xs text-muted-foreground">
-            Guests leave
+
+      {/* Rail with connector + nodes */}
+      <div className="relative my-3 grid grid-cols-3 place-items-center">
+        {/* Continuous connector that draws left to right */}
+        <div className="absolute inset-x-[16.667%] top-1/2 h-1 -translate-y-1/2 overflow-hidden rounded-full bg-border">
+          <div className="h-full rounded-full bg-fresh motion-safe:w-0 motion-safe:animate-[timeline-fill_1.8s_ease-out_0.2s_forwards] motion-reduce:w-full" />
+        </div>
+
+        {/* 1 — Checkout (past) */}
+        <div className="relative z-10 flex size-12 items-center justify-center rounded-full border-2 border-border bg-card text-muted-foreground">
+          <LogOut className="size-5" aria-hidden="true" />
+        </div>
+
+        {/* 2 — FreshStay cleans (now / the value) */}
+        <div className="relative z-10 flex items-center justify-center">
+          <span className="absolute inline-flex size-14 rounded-full bg-fresh/40 motion-safe:animate-ping" />
+          <span className="relative flex size-14 items-center justify-center rounded-full bg-fresh text-fresh-foreground shadow-md shadow-fresh/30">
+            <Sparkles className="size-6" strokeWidth={2.25} aria-hidden="true" />
           </span>
         </div>
-        <div className="relative flex flex-1 flex-col items-center">
-          <div className="absolute top-5 h-0.5 w-full -translate-y-1/2 overflow-hidden rounded-full bg-border">
-            <div
-              className="h-full w-[75%] rounded-full bg-fresh motion-safe:animate-[timeline-fill_2s_ease-out_forwards] motion-reduce:w-[75%]"
-            />
-          </div>
-          <div className="relative z-10 flex size-10 items-center justify-center rounded-full bg-fresh text-fresh-foreground shadow-sm">
-            <Check className="size-5" strokeWidth={2.5} aria-hidden="true" />
-          </div>
-          <span className="mt-2 text-center text-xs font-medium text-foreground">
-            FreshStay cleans
-          </span>
+
+        {/* 3 — Check-in (next) */}
+        <div className="relative z-10 flex size-12 items-center justify-center rounded-full border-2 border-fresh bg-background text-fresh">
+          <KeyRound className="size-5" aria-hidden="true" />
         </div>
-        <div className="flex flex-1 flex-col items-center gap-2">
-          <div className="flex size-10 items-center justify-center rounded-full bg-slate-dark text-white">
-            <span className="text-xs font-semibold">IN</span>
-          </div>
-          <span className="text-center text-xs text-muted-foreground">
-            Next guest arrives
-          </span>
-        </div>
+      </div>
+
+      {/* Step labels */}
+      <div className="grid grid-cols-3 items-start gap-1 text-center">
+        <span className="text-xs text-muted-foreground">Guests check out</span>
+        <span className="text-xs font-semibold text-foreground">
+          FreshStay cleans &amp; resets
+        </span>
+        <span className="text-xs text-muted-foreground">Next guest checks in</span>
+      </div>
+
+      {/* The window we own */}
+      <div className="mt-4 flex items-center justify-center gap-1.5 border-t border-border/60 pt-3 text-center text-xs text-muted-foreground">
+        <Clock className="size-3.5 shrink-0 text-fresh" aria-hidden="true" />
+        <span>
+          Cleaned, restocked &amp; guest-ready inside the{" "}
+          <span className="font-semibold text-foreground">~4-hour</span>{" "}
+          checkout-to-check-in window.
+        </span>
       </div>
     </div>
   );
