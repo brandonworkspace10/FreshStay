@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/landing/hero-section";
 import { HowItWorksSection } from "@/components/landing/how-it-works-section";
 import { LandingFooter } from "@/components/landing/landing-footer";
 import { LandingHeader } from "@/components/landing/landing-header";
+import { LeadPopup } from "@/components/landing/lead-popup";
 import { MobileCtaBar } from "@/components/landing/mobile-cta-bar";
 import { NeighborhoodsSection } from "@/components/landing/neighborhoods-section";
 import { PainSection } from "@/components/landing/pain-section";
@@ -36,6 +37,7 @@ export default function Page() {
       </main>
       <LandingFooter />
       <MobileCtaBar />
+      <LeadPopup />
     </>
   );
 }
