@@ -1,6 +1,9 @@
 import { Phone } from "lucide-react";
+import Link from "next/link";
 
 import { BrandMark } from "@/components/landing/brand-mark";
+import { AREAS } from "@/lib/areas";
+import { siteConfig } from "@/lib/site";
 
 export function LandingFooter() {
   return (
@@ -20,7 +23,7 @@ export function LandingFooter() {
               <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
                 <li>
                   <a
-                    href="tel:+12125550198"
+                    href={`tel:${siteConfig.phone.replace(/[^+\d]/g, "")}`}
                     className="inline-flex items-center gap-2 transition-colors hover:text-foreground focus-visible:text-foreground"
                   >
                     <Phone className="size-4" aria-hidden="true" />
@@ -29,10 +32,10 @@ export function LandingFooter() {
                 </li>
                 <li>
                   <a
-                    href="mailto:hosts@freshstay.co"
+                    href={`mailto:${siteConfig.email}`}
                     className="transition-colors hover:text-foreground focus-visible:text-foreground"
                   >
-                    hosts@freshstay.co
+                    {siteConfig.email}
                   </a>
                 </li>
               </ul>
@@ -47,10 +50,28 @@ export function LandingFooter() {
             </div>
           </div>
         </div>
+
+        {/* Areas we serve — internal links for local SEO */}
+        <div className="mt-10 border-t border-border pt-8">
+          <p className="text-sm font-semibold text-foreground">Areas we serve</p>
+          <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
+            {AREAS.map((a) => (
+              <li key={a.slug}>
+                <Link
+                  href={`/airbnb-cleaning/${a.slug}`}
+                  className="transition-colors hover:text-fresh"
+                >
+                  {a.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <div className="mt-10 border-t border-border pt-6 text-xs text-muted-foreground">
           <p>
             © {new Date().getFullYear()} FreshStay Cleaning Co. All rights
-            reserved. Serving NYC short-term rental hosts.
+            reserved. Serving NYC &amp; nearby NJ short-term rental hosts.
           </p>
         </div>
       </div>
