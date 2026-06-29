@@ -26,20 +26,80 @@ const faqItems = [
 export function JsonLd() {
   const graph = [
     {
-      "@type": "LocalBusiness",
+      "@type": ["LocalBusiness", "ProfessionalService"],
       "@id": `${siteConfig.url}/#business`,
       name: siteConfig.name,
       description: siteConfig.description,
       url: siteConfig.url,
       telephone: siteConfig.phone,
       email: siteConfig.email,
-      areaServed: {
-        "@type": "City",
-        name: "New York City",
-        containedInPlace: { "@type": "State", name: "New York" },
-      },
-      priceRange: "$89–$179",
       image: `${siteConfig.url}/opengraph-image`,
+      logo: `${siteConfig.url}/icon-512.png`,
+      priceRange: "$89–$179",
+      currenciesAccepted: "USD",
+      paymentAccepted: "Credit Card, Debit Card, ACH",
+      slogan: "Same-day Airbnb turnover cleaning for NYC hosts.",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: siteConfig.address.locality,
+        addressRegion: siteConfig.address.region,
+        addressCountry: siteConfig.address.country,
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: siteConfig.geo.latitude,
+        longitude: siteConfig.geo.longitude,
+      },
+      openingHoursSpecification: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ],
+        opens: siteConfig.hours.opens,
+        closes: siteConfig.hours.closes,
+      },
+      areaServed: [
+        {
+          "@type": "City",
+          name: "New York City",
+          containedInPlace: { "@type": "State", name: "New York" },
+        },
+        {
+          "@type": "City",
+          name: "Jersey City",
+          containedInPlace: { "@type": "State", name: "New Jersey" },
+        },
+        {
+          "@type": "City",
+          name: "Hoboken",
+          containedInPlace: { "@type": "State", name: "New Jersey" },
+        },
+        {
+          "@type": "AdministrativeArea",
+          name: "Hudson County, New Jersey",
+        },
+      ],
+      knowsAbout: [
+        "Airbnb turnover cleaning",
+        "Short-term rental cleaning",
+        "Vacation rental cleaning",
+        "Restocking and linen service for hosts",
+      ],
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: siteConfig.rating.value,
+        reviewCount: siteConfig.rating.count,
+        bestRating: "5",
+      },
+      ...(siteConfig.socials.length > 0
+        ? { sameAs: siteConfig.socials }
+        : {}),
     },
     {
       "@type": "Service",
