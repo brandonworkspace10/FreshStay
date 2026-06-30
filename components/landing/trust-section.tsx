@@ -44,7 +44,7 @@ export function TrustSection() {
     <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
       <div className="max-w-2xl">
         <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          Built for hosts who can&apos;t afford a no-show
+          Why NYC Airbnb hosts choose FreshStay BnB
         </h2>
         <p className="mt-4 text-lg text-muted-foreground">
           You&apos;re not hiring a stranger from a marketplace. You&apos;re

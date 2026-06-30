@@ -17,6 +17,16 @@ const faqs = [
       "Yes. Most of our host accounts are built around checkout-to-check-in windows—often 11am out, 3pm in. Same-day slots are prioritized for hosts on recurring plans. Tell us your checkout and check-in times when you sign up and we'll confirm availability for your address.",
   },
   {
+    question: "How long does an Airbnb turnover cleaning take?",
+    answer:
+      "A standard studio to 2-bedroom turnover takes about 1.5–3 hours depending on size and condition. We schedule inside your checkout-to-check-in window so the unit is guest-ready before the next arrival.",
+  },
+  {
+    question: "Do you bring your own cleaning supplies?",
+    answer:
+      "Yes. Our crews arrive fully equipped with professional, eco-friendly cleaning products and equipment. We also restock guest consumables—coffee, paper towels, soap, and toiletries—on request.",
+  },
+  {
     question: "Do you serve my neighborhood?",
     answer:
       "We cover Manhattan, Brooklyn, Queens, the Bronx, and Staten Island—with the fastest response in Manhattan, Brooklyn, and Queens. If you're in a specific block or building with access quirks, text us your address before signing up and we'll confirm coverage.",

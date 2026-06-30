@@ -29,7 +29,7 @@ export function TestimonialsSection() {
     <section className="border-y border-border/60 bg-muted/30 py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          Hosts who stopped scrambling on turnover day
+          What NYC Airbnb hosts say about FreshStay
         </h2>
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {testimonials.map((item) => (

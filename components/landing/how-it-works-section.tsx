@@ -28,7 +28,7 @@ export function HowItWorksSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="max-w-2xl">
           <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            Three steps, then turnover day runs itself
+            Our Airbnb turnover process, from checkout to check-in
           </h2>
           <p className="mt-4 text-lg text-white/65">
             No app to learn. No chasing invoices. You get a recurring plan and a

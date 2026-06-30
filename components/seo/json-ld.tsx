@@ -12,6 +12,16 @@ const faqItems = [
       "Yes. Most host accounts are built around checkout-to-check-in windows. Same-day slots are prioritized for hosts on recurring plans.",
   },
   {
+    question: "How long does an Airbnb turnover cleaning take?",
+    answer:
+      "A standard studio to 2-bedroom turnover takes about 1.5 to 3 hours depending on size and condition, scheduled inside your checkout-to-check-in window.",
+  },
+  {
+    question: "Do you bring your own cleaning supplies?",
+    answer:
+      "Yes. Crews arrive fully equipped with professional, eco-friendly cleaning products and equipment, and restock guest consumables like coffee, paper towels, and toiletries on request.",
+  },
+  {
     question: "Do you serve my neighborhood?",
     answer:
       "We cover Manhattan, Brooklyn, Queens, the Bronx, and Staten Island, with the fastest response in Manhattan, Brooklyn, and Queens.",
@@ -112,6 +122,29 @@ export function JsonLd() {
         reviewCount: siteConfig.rating.count,
         bestRating: "5",
       },
+      review: [
+        {
+          "@type": "Review",
+          reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+          author: { "@type": "Person", name: "Sarah M." },
+          reviewBody:
+            "On a bi-weekly plan, my Williamsburg one-bedroom just gets done. Same crew, same checklist, no drama.",
+        },
+        {
+          "@type": "Review",
+          reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+          author: { "@type": "Person", name: "James T." },
+          reviewBody:
+            "Same-day turnover is the whole game in Midtown. FreshStay hits my 3pm deadline every time, and the photo reports save me from driving in to check.",
+        },
+        {
+          "@type": "Review",
+          reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+          author: { "@type": "Person", name: "Priya K." },
+          reviewBody:
+            "Three units across LIC and Bed-Stuy on a weekly plan, one invoice, one account manager. Worth more than saving $20 on a random cleaner.",
+        },
+      ],
       ...(siteConfig.socials.length > 0
         ? { sameAs: siteConfig.socials }
         : {}),

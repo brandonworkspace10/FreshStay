@@ -30,7 +30,7 @@ export function SignupSection() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center">
         <div>
           <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Get on a plan before your next checkout
+            Get your free Airbnb cleaning quote
           </h2>
           <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
             Tell us about your unit and we&apos;ll confirm pricing, coverage,

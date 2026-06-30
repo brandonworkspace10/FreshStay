@@ -24,12 +24,14 @@ export function HeroSection() {
               Airbnb cleaning · NYC
             </p>
             <h1 className="font-display text-balance text-4xl font-bold leading-[1.08] text-foreground sm:text-5xl lg:text-[3.25rem] lg:text-white lg:[text-shadow:_0_2px_18px_rgb(0_0_0/0.6)]">
-              Protect your 5-star reviews with reliable NYC Airbnb turnovers
+              Protect your 5-star reviews with reliable NYC Airbnb turnover
+              cleaning
             </h1>
             <p className="mt-5 text-lg leading-relaxed text-muted-foreground sm:text-xl lg:text-white/90 lg:[text-shadow:_0_1px_12px_rgb(0_0_0/0.55)]">
-              FreshStay keeps your short-term rental 5-star ready on a recurring
-              plan—same-day turnovers with fresh linens, restocked essentials,
-              and photo proof after every clean. Serving Airbnb hosts in
+              FreshStay handles professional Airbnb and vacation rental
+              turnover cleaning on a recurring plan—same-day, guest-ready
+              turnovers with fresh linens, restocked essentials, and photo proof
+              after every clean. Serving short-term rental hosts across
               Manhattan, Brooklyn &amp; Queens.
             </p>
 
