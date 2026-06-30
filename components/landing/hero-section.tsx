@@ -7,13 +7,13 @@ import { TurnoverTimeline } from "@/components/landing/turnover-timeline";
 export function HeroSection() {
   return (
     <section className="relative isolate overflow-hidden bg-gradient-to-b from-fresh-light/40 to-background lg:bg-none">
-      {/* Desktop only: full-bleed cinematic video background */}
+      {/* Desktop only: full-bleed cinematic video background.
+          Neutral shadow only behind the text — keeps the video's true colors. */}
       <div className="absolute inset-0 hidden lg:block">
         <HeroVideo fill />
-        <div aria-hidden="true" className="absolute inset-0 bg-[#0a3b38]/30" />
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-r from-[#062826]/70 via-[#0a3b38]/20 to-transparent"
+          className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/15 to-transparent"
         />
       </div>
 
@@ -23,10 +23,10 @@ export function HeroSection() {
             <p className="mb-4 inline-flex rounded-full bg-fresh-light px-3 py-1 text-xs font-semibold tracking-wide text-fresh uppercase lg:bg-white/10 lg:text-white lg:ring-1 lg:ring-white/25 lg:backdrop-blur-sm">
               Airbnb cleaning · NYC
             </p>
-            <h1 className="font-display text-balance text-4xl font-bold leading-[1.08] text-foreground sm:text-5xl lg:text-[3.25rem] lg:text-white lg:drop-shadow-sm">
+            <h1 className="font-display text-balance text-4xl font-bold leading-[1.08] text-foreground sm:text-5xl lg:text-[3.25rem] lg:text-white lg:[text-shadow:_0_2px_18px_rgb(0_0_0/0.6)]">
               NYC Airbnb cleaning that shows up between every guest
             </h1>
-            <p className="mt-5 text-lg leading-relaxed text-muted-foreground sm:text-xl lg:text-white/85">
+            <p className="mt-5 text-lg leading-relaxed text-muted-foreground sm:text-xl lg:text-white/90 lg:[text-shadow:_0_1px_12px_rgb(0_0_0/0.55)]">
               FreshStay keeps your short-term rental 5-star ready on a recurring
               plan—same-day turnovers with fresh linens, restocked essentials,
               and photo proof after every clean. Serving Airbnb hosts in
