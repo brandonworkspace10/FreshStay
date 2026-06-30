@@ -5,7 +5,7 @@ const plans = [
   {
     id: "per-stay",
     name: "Per stay",
-    price: "$129",
+    price: "$179",
     unit: "per turnover",
     description: "Best when your calendar is unpredictable.",
     features: [
@@ -19,7 +19,7 @@ const plans = [
   {
     id: "bi-weekly",
     name: "Bi-weekly",
-    price: "$99",
+    price: "$159",
     unit: "per clean",
     description: "Most popular for steady-booking listings.",
     features: [
@@ -33,7 +33,7 @@ const plans = [
   {
     id: "weekly",
     name: "Weekly",
-    price: "$89",
+    price: "$145",
     unit: "per clean",
     description: "For high-occupancy units and multi-property hosts.",
     features: [
@@ -96,7 +96,7 @@ export function PricingSection() {
               </div>
               {plan.id === "bi-weekly" && (
                 <p className="mt-1 text-xs text-muted-foreground">
-                  About $3.30/day—less than a missed booking costs.
+                  Less than one cancelled booking from a bad review.
                 </p>
               )}
               <ul className="mt-6 flex-1 space-y-3">
@@ -129,12 +129,12 @@ export function PricingSection() {
           ))}
         </div>
         <p className="mt-8 text-center text-sm text-muted-foreground">
-          2-bedroom from $149 · 3-bedroom from $179 · Studios from $99.{" "}
+          Studio from $149 · 2-bedroom from $229 · 3-bedroom from $289.{" "}
           <a
-            href="#signup"
+            href="/pricing"
             className="font-medium text-fresh underline-offset-4 hover:underline focus-visible:underline"
           >
-            Get an exact quote for your unit
+            See full pricing &amp; instant calculator
           </a>
         </p>
       </div>

@@ -69,7 +69,7 @@ const faqsFor = (a: Area) => {
     },
     {
       q: `How much does Airbnb cleaning cost in ${a.name}?`,
-      a: "For a standard 1-bedroom, per-stay turnovers start at $129, bi-weekly plans run about $99 per clean, and weekly plans about $89. Studios start at $99; larger units are quoted by bedroom count.",
+      a: "For a standard 1-bedroom, per-stay turnovers are $179, bi-weekly plans about $159 per clean, and weekly plans about $145. Studios start at $149, 2-bedrooms from $229, 3-bedrooms from $289 — every clean includes fresh linens, restocking, and photo proof.",
     },
     {
       q: `Can you do same-day turnovers in ${a.name}?`,

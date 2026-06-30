@@ -9,7 +9,7 @@ const faqs = [
   {
     question: "How much does Airbnb cleaning cost in NYC?",
     answer:
-      "For a standard 1-bedroom turnover, per-stay cleaning starts at $129. Bi-weekly plans run about $99 per clean and weekly plans about $89—because your crew is scheduled in advance, not booked last-minute. Studios start at $99; larger units are quoted based on bedroom count. You'll get an exact price when you submit your unit details.",
+      "For a standard 1-bedroom turnover, per-stay cleaning is $179. Bi-weekly plans run about $159 per clean and weekly plans about $145—because your crew is scheduled in advance, not booked last-minute. Studios start at $149, 2-bedrooms from $229, 3-bedrooms from $289. Use the calculator on our pricing page for an instant estimate.",
   },
   {
     question: "Can you handle same-day turnover?",
@@ -32,9 +32,9 @@ const faqs = [
       "Yes. Every turnover ends with before-and-after photos sent straight to you, plus a same-day report of any damage, low supplies, or items guests left behind. You get proof your place is guest-ready without driving over to check it yourself.",
   },
   {
-    question: "Why is FreshStay cheaper than one-off Airbnb cleaners in NYC?",
+    question: "Is FreshStay good value for premium NYC Airbnb cleaning?",
     answer:
-      "One-off NYC turnover cleans often run $250–$400 because they're booked last-minute. FreshStay recurring plans start at $89–$129 per clean because your crew is scheduled in advance around your booking calendar—so you get photo-verified turnovers at a fraction of the per-visit price.",
+      "Premium NYC turnover services often run $250–$450 per visit. FreshStay recurring plans start at $145–$179 per clean—full premium turnovers with fresh linens, restocking, and photo proof—at a fair, predictable price because your crew is scheduled in advance around your booking calendar.",
   },
   {
     question: "Do you restock supplies and provide fresh linens?",

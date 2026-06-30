@@ -4,7 +4,7 @@ const faqItems = [
   {
     question: "How much does Airbnb cleaning cost in NYC?",
     answer:
-      "For a standard 1-bedroom turnover, per-stay cleaning starts at $129. Bi-weekly plans run about $99 per clean and weekly plans about $89. Studios start at $99; larger units are quoted based on bedroom count.",
+      "For a standard 1-bedroom turnover, per-stay cleaning is $179, bi-weekly plans about $159 per clean, and weekly plans about $145. Studios start at $149, 2-bedrooms from $229, 3-bedrooms from $289. Every clean includes fresh linens, restocking checks, and photo proof.",
   },
   {
     question: "Can you handle same-day turnover?",
@@ -27,9 +27,9 @@ const faqItems = [
       "Yes. Every turnover ends with before-and-after photos sent to you, plus a same-day report of any damage, low supplies, or items guests left behind — so you have proof the unit is guest-ready.",
   },
   {
-    question: "Why is FreshStay cheaper than one-off Airbnb cleaners in NYC?",
+    question: "Is FreshStay good value for premium Airbnb cleaning in NYC?",
     answer:
-      "One-off NYC turnover cleans often run $250–$400 because they're booked last-minute. FreshStay recurring plans start at $89–$129 per clean because your crew is scheduled in advance, so you get photo-verified turnovers at a fraction of the per-visit price.",
+      "Premium NYC Airbnb turnover services often run $250–$450 per visit. FreshStay recurring plans start at $145–$179 per clean — full premium turnovers with fresh linens, restocking, and photo proof — at a fair, predictable price because your crew is scheduled in advance.",
   },
   {
     question: "Do you restock supplies and provide fresh linens?",
@@ -50,7 +50,7 @@ export function JsonLd() {
       email: siteConfig.email,
       image: `${siteConfig.url}/opengraph-image`,
       logo: `${siteConfig.url}/icon-512.png`,
-      priceRange: "$89–$179",
+      priceRange: "$145–$429",
       currenciesAccepted: "USD",
       paymentAccepted: "Credit Card, Debit Card, ACH",
       slogan: "Same-day Airbnb turnover cleaning for NYC hosts.",
@@ -128,28 +128,28 @@ export function JsonLd() {
       offers: {
         "@type": "AggregateOffer",
         priceCurrency: "USD",
-        lowPrice: "89",
-        highPrice: "179",
+        lowPrice: "145",
+        highPrice: "429",
         offerCount: "3",
         offers: [
           {
             "@type": "Offer",
             name: "Per-stay turnover",
-            price: "129",
+            price: "179",
             priceCurrency: "USD",
             description: "One-time turnover clean for a standard 1-bedroom.",
           },
           {
             "@type": "Offer",
             name: "Bi-weekly plan",
-            price: "99",
+            price: "159",
             priceCurrency: "USD",
             description: "Recurring bi-weekly turnover clean, per visit.",
           },
           {
             "@type": "Offer",
             name: "Weekly plan",
-            price: "89",
+            price: "145",
             priceCurrency: "USD",
             description: "Recurring weekly turnover clean, per visit.",
           },

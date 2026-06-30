@@ -15,12 +15,12 @@ export function LandingHeader() {
           className="hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex"
           aria-label="Main"
         >
-          <a
-            href="#plans"
+          <Link
+            href="/pricing"
             className="transition-colors hover:text-fresh focus-visible:text-fresh"
           >
-            Plans
-          </a>
+            Pricing
+          </Link>
           <a
             href="#neighborhoods"
             className="transition-colors hover:text-fresh focus-visible:text-fresh"
