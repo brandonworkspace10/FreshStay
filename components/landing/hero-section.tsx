@@ -26,9 +26,10 @@ export function HeroSection() {
               NYC Airbnb cleaning that shows up between every guest
             </h1>
             <p className="mt-5 text-lg leading-relaxed text-muted-foreground sm:text-xl">
-              FreshStay keeps your short-term rental spotless on a recurring
-              plan—weekly, bi-weekly, or after every stay. Same-day turnovers
-              across Manhattan, Brooklyn, and Queens.
+              FreshStay keeps your short-term rental 5-star ready on a recurring
+              plan—same-day turnovers with fresh linens, restocked essentials,
+              and photo proof after every clean. Serving Airbnb hosts in
+              Manhattan, Brooklyn &amp; Queens.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button

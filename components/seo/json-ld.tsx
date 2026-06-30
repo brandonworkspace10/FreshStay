@@ -21,6 +21,21 @@ const faqItems = [
     answer:
       "Every FreshStay crew member is background-checked and trained on short-term rental turnover standards. All jobs carry $2M liability insurance.",
   },
+  {
+    question: "Do you send photos after each Airbnb clean?",
+    answer:
+      "Yes. Every turnover ends with before-and-after photos sent to you, plus a same-day report of any damage, low supplies, or items guests left behind — so you have proof the unit is guest-ready.",
+  },
+  {
+    question: "Why is FreshStay cheaper than one-off Airbnb cleaners in NYC?",
+    answer:
+      "One-off NYC turnover cleans often run $250–$400 because they're booked last-minute. FreshStay recurring plans start at $89–$129 per clean because your crew is scheduled in advance, so you get photo-verified turnovers at a fraction of the per-visit price.",
+  },
+  {
+    question: "Do you restock supplies and provide fresh linens?",
+    answer:
+      "Yes. Every turnover includes hotel-style fresh linens and topped-up essentials such as coffee, paper towels, soap, and toiletries, with amenity inventory tracked each visit.",
+  },
 ];
 
 export function JsonLd() {

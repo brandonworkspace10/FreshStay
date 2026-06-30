@@ -1,6 +1,7 @@
 import { FaqSection } from "@/components/landing/faq-section";
 import { HeroSection } from "@/components/landing/hero-section";
 import { HowItWorksSection } from "@/components/landing/how-it-works-section";
+import { IncludedSection } from "@/components/landing/included-section";
 import { LandingFooter } from "@/components/landing/landing-footer";
 import { LandingHeader } from "@/components/landing/landing-header";
 import { LeadPopup } from "@/components/landing/lead-popup";
@@ -28,6 +29,7 @@ export default function Page() {
         <SocialProofBar />
         <PainSection />
         <PricingSection />
+        <IncludedSection />
         <NeighborhoodsSection />
         <HowItWorksSection />
         <TrustSection />
