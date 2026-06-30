@@ -10,14 +10,21 @@ export function HeroSection() {
       {/* Full-bleed video background */}
       <HeroVideo fill />
 
-      {/* Light brand-teal tint — keeps more of the original video color */}
+      {/* Light brand-teal tint — keeps more of the original video color.
+          A touch stronger on phones for legibility. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[#0a3b38]/30"
+        className="absolute inset-0 bg-[#0a3b38]/45 sm:bg-[#0a3b38]/30"
       />
+      {/* Desktop: darker on the left where the text sits */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-r from-[#062826]/70 via-[#0a3b38]/20 to-transparent"
+        className="absolute inset-0 hidden bg-gradient-to-r from-[#062826]/70 via-[#0a3b38]/20 to-transparent sm:block"
+      />
+      {/* Phones: darker toward the bottom so stacked text stays readable */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-t from-[#062826]/80 via-transparent to-transparent sm:hidden"
       />
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24 lg:py-28">

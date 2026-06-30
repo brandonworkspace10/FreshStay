@@ -17,6 +17,12 @@ export function HeroVideo({ fill = false }: { fill?: boolean }) {
     const video = ref.current;
     if (!video) return;
 
+    // React doesn't always set `muted` on the DOM node, which blocks autoplay
+    // on iOS/Android. Force it on so muted autoplay is allowed.
+    video.muted = true;
+    video.defaultMuted = true;
+    video.setAttribute("muted", "");
+
     const play = () => {
       const p = video.play();
       if (p) p.catch(() => {});
