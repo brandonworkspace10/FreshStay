@@ -10,7 +10,7 @@ const featherMask =
  * if the browser ever pauses it (tab switch, battery saver, off-screen, iOS
  * low-power). Edges are feathered so the video blends into the page.
  */
-export function HeroVideo() {
+export function HeroVideo({ fill = false }: { fill?: boolean }) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -44,6 +44,26 @@ export function HeroVideo() {
       window.clearInterval(interval);
     };
   }, []);
+
+  if (fill) {
+    return (
+      <div className="absolute inset-0 h-full w-full overflow-hidden">
+        {/* biome-ignore lint/a11y/useMediaCaption: decorative, muted background loop */}
+        <video
+          ref={ref}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="/turnover-poster.jpg"
+          className="h-full w-full object-cover"
+        >
+          <source src="/turnover.mp4" type="video/mp4" />
+        </video>
+      </div>
+    );
+  }
 
   return (
     <div
