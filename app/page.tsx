@@ -1,5 +1,6 @@
 import { FaqSection } from "@/components/landing/faq-section";
 import { HeroSection } from "@/components/landing/hero-section";
+import { GuaranteeSection } from "@/components/landing/guarantee-section";
 import { HowItWorksSection } from "@/components/landing/how-it-works-section";
 import { IncludedSection } from "@/components/landing/included-section";
 import { LandingFooter } from "@/components/landing/landing-footer";
@@ -34,6 +35,7 @@ export default function Page() {
         <HowItWorksSection />
         <TrustSection />
         <TestimonialsSection />
+        <GuaranteeSection />
         <FaqSection />
         <SignupSection />
       </main>
