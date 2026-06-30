@@ -35,11 +35,6 @@ export function HeroSection() {
               Manhattan, Brooklyn &amp; Queens.
             </p>
 
-            {/* Phones: contained, native-aspect video (sharp, not zoomed) */}
-            <div className="mt-6 lg:hidden">
-              <HeroVideo />
-            </div>
-
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button
                 nativeButton={false}
@@ -91,6 +86,10 @@ export function HeroSection() {
           </div>
 
           <div className="lg:pl-4">
+            {/* Phones: contained video above the timeline card (full-bleed is desktop only) */}
+            <div className="mb-5 lg:hidden">
+              <HeroVideo />
+            </div>
             <TurnoverTimeline />
             <p className="mt-4 text-center text-sm text-muted-foreground lg:text-left lg:text-white/75">
               Most hosts book us on a plan so turnover day is never a scramble.
