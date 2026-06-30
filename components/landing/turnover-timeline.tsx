@@ -3,7 +3,7 @@ import { Clock, KeyRound, LogOut, Sparkles } from "lucide-react";
 export function TurnoverTimeline({ className }: { className?: string }) {
   return (
     <div
-      className={`surface-card p-5 sm:p-6 ${className ?? ""}`}
+      className={`rounded-2xl border border-white/40 bg-white/60 p-5 shadow-lg backdrop-blur-md sm:p-6 ${className ?? ""}`}
       aria-label="Turnover timeline: 11am guest checkout, same-day FreshStay cleaning, 3pm next guest check-in"
     >
       {/* Times + same-day badge */}
