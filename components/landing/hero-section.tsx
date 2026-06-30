@@ -23,7 +23,7 @@ export function HeroSection() {
       <div className="relative z-10 mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24 lg:py-28">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="max-w-xl">
-            <p className="mb-4 inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-semibold tracking-wide text-white uppercase ring-1 ring-white/25 backdrop-blur-sm">
+            <p className="mb-4 inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-semibold tracking-wide text-[#FF385C] uppercase ring-1 ring-white/25 backdrop-blur-sm">
               Airbnb cleaning · NYC
             </p>
             <h1 className="font-display text-balance text-4xl font-bold leading-[1.08] text-white drop-shadow-sm sm:text-5xl lg:text-[3.25rem]">
