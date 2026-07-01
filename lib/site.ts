@@ -4,7 +4,7 @@ export const siteConfig = {
     "Professional Airbnb & short-term rental turnover cleaning across NYC. Same-day service, insured crews, background-checked cleaners. Weekly, bi-weekly, or per-stay plans for hosts.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://freshstaybnb.com",
   phone: "+1-212-555-0198",
-  email: "hosts@freshstaybnb.com",
+  email: "freshstaybnb@gmail.com",
   // Service-area business — locality only (no public storefront).
   address: { locality: "New York", region: "NY", country: "US" },
   geo: { latitude: 40.7128, longitude: -74.006 },
