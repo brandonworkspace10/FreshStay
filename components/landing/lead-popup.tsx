@@ -68,11 +68,15 @@ export function LeadPopup() {
   const openedRef = useRef(false);
 
   // Auto-open once after a delay or on scroll depth (unless already completed).
+  // On phones we skip auto-open entirely so it doesn't cover the small screen —
+  // the floating launcher stays, so users can still tap it when they want.
   useEffect(() => {
     if (localStorage.getItem(STORAGE_KEY)) {
       setHidden(true);
       return;
     }
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    if (!isDesktop) return;
     const openOnce = () => {
       if (!openedRef.current) {
         openedRef.current = true;
