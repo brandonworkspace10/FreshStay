@@ -83,16 +83,18 @@ export function LeadPopup() {
         setOpen(true);
       }
     };
-    const timer = window.setTimeout(openOnce, 12000);
+    // Open only once the visitor has scrolled past the pricing section.
     const onScroll = () => {
-      const max = document.body.scrollHeight - window.innerHeight;
-      if (max > 0 && window.scrollY / max > 0.3) openOnce();
+      const pricing = document.getElementById("plans");
+      if (pricing) {
+        if (pricing.getBoundingClientRect().bottom < 0) openOnce();
+      } else {
+        const max = document.body.scrollHeight - window.innerHeight;
+        if (max > 0 && window.scrollY / max > 0.5) openOnce();
+      }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.clearTimeout(timer);
-      window.removeEventListener("scroll", onScroll);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   // Close on Escape.
